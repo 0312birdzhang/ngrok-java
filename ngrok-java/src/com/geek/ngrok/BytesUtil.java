@@ -20,8 +20,7 @@ public class BytesUtil {
 		byte[] dest = new byte[maxlength]; // 目标数组
 		for (int i = 0; i < src.length; i++) {
 			length = src[i].length;
-			System.arraycopy(src[i], 0, dest, index, length); // 将每�?��byte[] //
-																// 复制�?目标数组
+			System.arraycopy(src[i], 0, dest, index, length); 
 			index = index + length; // 起始位置向后挪动byte[]的length
 		}
 		return dest;
@@ -63,6 +62,7 @@ public class BytesUtil {
 		for (int i = 0; i < 8; i++) {
 			back[i] = bytes[(7 - i)];
 		}
+		bytes = new byte[0];
 		return back;
 	}
 
@@ -77,29 +77,29 @@ public class BytesUtil {
 
 	/* 十六进制打印 */
 	public static String printHexString(byte[] b) {
-		String hexecho = "";
+		StringBuffer hexecho = new StringBuffer();
 		for (int i = 0; i < b.length; i++) {
-			String hex = Integer.toHexString(b[i] & 0xFF);
+			StringBuffer hex = new StringBuffer(Integer.toHexString(b[i] & 0xFF));
 
 			if (hex.length() == 1) {
-				hex = '0' + hex;
+				hex = new StringBuffer("0").append(hex);
 			}
-			hexecho = hexecho + hex.toUpperCase() + ":";
+			hexecho.append(hex.toString().toUpperCase()).append(":");
 		}
-		return hexecho;
+		return hexecho.toString();
 	}
 
 	public static String printHexString(byte[] b, int len) {
-		String hexecho = "";
+		StringBuffer hexecho = new StringBuffer();
 		for (int i = 0; i < len; i++) {
-			String hex = Integer.toHexString(b[i] & 0xFF);
+			StringBuffer hex = new StringBuffer(Integer.toHexString(b[i] & 0xFF));
 
 			if (hex.length() == 1) {
-				hex = '0' + hex;
+				hex = new StringBuffer("0").append(hex);
 			}
-			hexecho = hexecho + hex.toUpperCase() + ":";
+			hexecho.append(hex.toString().toUpperCase()).append(":");
 		}
-		return hexecho;
+		return hexecho.toString();
 	}
 
 	/* 短整型转字节 */
@@ -147,13 +147,11 @@ public class BytesUtil {
 	}
 
 	public static long bytes2long(byte[] b) {
-
 		int mask = 0xff;
-		int temp = 0;
 		int res = 0;
 		for (int i = 0; i < 8; i++) {
 			res <<= 8;
-			temp = b[i] & mask;
+			int temp = b[i] & mask;
 			res |= temp;
 		}
 		return res;
@@ -193,20 +191,17 @@ public class BytesUtil {
 	}
 
 	public static String byte2hex(byte[] b) {
-
-		String hs = "";
-		String tmp = "";
+		StringBuffer hs = new StringBuffer();
 		for (int n = 0; n < b.length; n++) {
 			// 整数转成十六进制表示
-			tmp = (java.lang.Integer.toHexString(b[n] & 0XFF));
+			String tmp = Integer.toHexString(b[n] & 0XFF);
 			if (tmp.length() == 1) {
-				hs = hs + "0" + tmp;
+				hs.append("0").append(tmp);
 			} else {
-				hs = hs + tmp;
+				hs.append(tmp);
 			}
 		}
-		tmp = null;
-		return hs.toUpperCase(); // 转成大写
+		return hs.toString().toUpperCase(); // 转成大写
 	}
 
 }
